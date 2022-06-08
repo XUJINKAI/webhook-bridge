@@ -1,0 +1,77 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="lib/vue2/vue.js"></script>
+    <link href="lib/element-ui/index.css" rel="stylesheet">
+    <script src="lib/element-ui/index.js"></script>
+    <script src="lib/axios.js"></script>
+</head>
+
+<body>
+    <style>
+    </style>
+
+    <div id="app">
+        <h1>Webhook Bridge (飞书机器人消息)</h1>
+
+        <div>
+            飞书机器人webhook地址：
+            <el-input v-model="hook_url"></el-input>
+        </div>
+
+        <div>消息类型：
+            <el-radio-group v-model="msg_type">
+                <el-radio label="text">text</el-radio>
+                <el-radio label="md">markdown</el-radio>
+            </el-radio-group>
+        </div>
+
+        <div>
+            Payload:
+            <el-input type="textarea" :autosize="{minRows: 10}" v-model="payload">
+            </el-input>
+        </div>
+
+        <el-button type="primary" @click="send">发送</el-button>
+
+        <div>
+            Result:
+            <el-input type="textarea" :autosize="{minRows: 3}" v-model="result">
+            </el-input>
+        </div>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            delimiters: ['${', '}'],
+            data: {
+                hook_url: "https://open.feishu.cn/open-apis/bot/v2/hook/xxxx-xxxx-xxxx-xxxx",
+                msg_type: "text",
+                payload: "",
+                result: "",
+            },
+            computed: {
+            },
+            methods: {
+                send: function () {
+                    var self = this;
+                    var post_url = `${location.origin}/api/feishu-msg.py?msg_type=${this.msg_type}&hook_url=${this.hook_url}`;
+                    var headers = { headers: { "Content-Type": "text/plain" } };
+                    axios.post(post_url, self.payload, headers)
+                        .then(function (response) {
+                            console.log(response);
+                            self.result = response.data;
+                        }).catch(function (error) {
+                            console.log(error);
+                            self.result = error;
+                        });
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

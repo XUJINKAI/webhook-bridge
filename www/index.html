@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="lib/vue2/vue.js"></script>
+    <link href="lib/element-ui/index.css" rel="stylesheet">
+    <script src="lib/element-ui/index.js"></script>
+</head>
+
+<body>
+    <style>
+    </style>
+
+    <div id="app">
+        <h1>Webhook Bridge</h1>
+        <p>用于桥接不同应用间的webhook</p>
+
+        <div>
+            原始的webhook地址：
+            <el-input v-model="url_ori"></el-input>
+        </div>
+
+        <br>
+        <div>
+            桥接模板:
+            <el-radio-group v-model="forward_template">
+                <el-radio label="gitlab_feishu">Gitlab_飞书</el-radio>
+            </el-radio-group>
+        </div>
+
+        <div v-if="forward_template=='gitlab_feishu'">
+            <div>
+                Branch Filter：
+                <el-input v-model="gitlab_branch_filter"></el-input>
+            </div>
+            <div>
+                转换后的webhook地址：
+                <el-input v-model="url_convert" :readonly="true"></el-input>
+                将此地址填入gitlab的webhook URL中即可
+            </div>
+        </div>
+
+        <h2>测试页</h2>
+        <p><a href="/api/echo" target="_blank">echo</a>/api/echo.sh</p>
+        <p><a href="/www/post.html" target="_blank">POST调试</a>/www/post.html</p>
+        <p><a href="/www/feishu-msg.html" target="_blank">飞书消息</a>/www/feishu-msg.html</p>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            delimiters: ['${', '}'],
+            data: {
+                url_ori: "https://open.feishu.cn/open-apis/bot/v2/hook/xxxx-xxxx-xxxx-xxxx",
+                forward_template: "gitlab_feishu",
+                gitlab_branch_filter: "master,release/*"
+            },
+            computed: {
+                url_convert: function () {
+                    var result = `${location.origin}/api/gitlab-feishu.py?hook_url=${this.url_ori}`;
+                    if(!!this.gitlab_branch_filter){
+                        result += `&branch_filter=${this.gitlab_branch_filter}`;
+                    }
+                    return result;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

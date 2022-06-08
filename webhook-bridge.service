@@ -1,0 +1,13 @@
+[Unit]
+Description=Webhook Bridge
+
+[Service]
+ExecStart=/root/webhookd -scripts scripts -static-dir www -static-path /www -listen-addr :9999
+WorkingDirectory=/root/
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+
+[Install]
+WantedBy=default.target
