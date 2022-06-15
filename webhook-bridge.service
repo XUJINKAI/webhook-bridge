@@ -1,9 +1,15 @@
+# cp webhook-bridge.service /etc/systemd/system/webhook-bridge.service
+# systemctl daemon-reload
+# systemctl restart webhook-bridge
+# systemctl enable webhook-bridge
+# systemctl status webhook-bridge
+
 [Unit]
 Description=Webhook Bridge
 
 [Service]
-ExecStart=/root/webhookd -scripts scripts -static-dir www -static-path /www -listen-addr :9999
-WorkingDirectory=/root/
+ExecStart=/root/webhook-bridge/webhookd -scripts scripts -static-dir www -static-path /www -listen-addr :9999
+WorkingDirectory=/root/webhook-bridge/
 Type=simple
 Restart=always
 RestartSec=1

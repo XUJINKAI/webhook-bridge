@@ -14,6 +14,8 @@
 
 然后执行`./webhookd -scripts scripts -static-dir www -static-path /www -listen-addr :8080`运行（或使用`make run`命令）。
 
+提示权限问题的话需要给脚本增加执行权限 `chmod +x scripts/api/*`
+
 程序自带一个简易的web界面，可打开 http://SERVER_IP:8080/www/ 查看。
 
 ## gitlab发送消息到飞书(Lark)
