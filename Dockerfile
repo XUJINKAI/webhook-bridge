@@ -7,6 +7,10 @@ COPY ./ /opt/
 
 WORKDIR  /opt/
 
+RUN chmod -R 777 /opt/
+
+RUN pip3 install requests
+
 EXPOSE 80
 
 CMD ["/usr/local/bin/webhookd","-scripts","scripts","-static-dir", "www","-static-path","/www","-listen-addr", ":80"]
