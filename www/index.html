@@ -26,6 +26,9 @@
             <el-radio-group v-model="forward_template">
                 <el-radio label="gitlab_feishu">Gitlab_飞书</el-radio>
             </el-radio-group>
+            <el-radio-group v-model="forward_template">
+                <el-radio label="chandao_feishu">禅道_飞书</el-radio>
+            </el-radio-group>
         </div>
 
         <div v-if="forward_template=='gitlab_feishu'">
@@ -33,11 +36,14 @@
                 Branch Filter：
                 <el-input v-model="gitlab_branch_filter"></el-input>
             </div>
-            <div>
-                转换后的webhook地址：
-                <el-input v-model="url_convert" :readonly="true"></el-input>
-                将此地址填入gitlab的webhook URL中即可
-            </div>
+        </div>
+
+        <div v-if="forward_template=='chandao_feishu'">
+        </div>
+
+        <div>
+            转换后的webhook地址：
+            <el-input v-model="url_convert" :readonly="true"></el-input>
         </div>
 
         <h2>测试页</h2>
@@ -57,9 +63,13 @@
             },
             computed: {
                 url_convert: function () {
-                    var result = `${location.origin}/api/gitlab-feishu.py?hook_url=${this.url_ori}`;
-                    if(!!this.gitlab_branch_filter){
-                        result += `&branch_filter=${this.gitlab_branch_filter}`;
+                    if (this.forward_template == "gitlab_feishu") {
+                        var result = `${location.origin}/api/gitlab-feishu.py?hook_url=${this.url_ori}`;
+                        if (!!this.gitlab_branch_filter) {
+                            result += `&branch_filter=${this.gitlab_branch_filter}`;
+                        }
+                    } else if (this.forward_template == "chandao_feishu") {
+                        var result = `${location.origin}/api/chandao-feishu.py?hook_url=${this.url_ori}`;
                     }
                     return result;
                 }

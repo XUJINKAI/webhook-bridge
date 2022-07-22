@@ -32,6 +32,12 @@
 
 其中`branch_filter=master,release/*`为分支过滤条件，此参数可以不填
 
+## 禅道消息发送到飞书(Lark)
+
+老版本禅道webhook不支持飞书，选择默认，地址类似 http://SERVER_IP:8080/api/chandao-feishu.py?hook_url=https://open.feishu.cn/open-apis/bot/v2/hook/xxxx-xxxx-xxxx-xxxx
+
+另外，禅道JSON消息中只有产品ID，没有产品名称，目前需要手动添加相关配置到scripts/api/chandao-feishu.py中。
+
 ## LICENSE
 
 MIT
