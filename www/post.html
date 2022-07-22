@@ -49,9 +49,9 @@
             el: '#app',
             delimiters: ['${', '}'],
             data: {
-                post_url: `${location.origin}/api/`,
+                post_url: `${location.origin}/api/echo`,
                 content_type: "application/json",
-                payload: "",
+                payload: `{"text":"测试"}`,
                 result: "",
             },
             computed: {

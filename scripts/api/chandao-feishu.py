@@ -2,16 +2,32 @@
 
 import os, sys
 from modules.common import *
-from modules.msg_parse_gitlab import *
+from modules.msg_parse_chandao import *
 from modules.send_msg_feishu import *
 
 if __name__ == "__main__":
     METHOD_GET_redirect_www("")
 
-    branch_filter = get_param_value("branch_filter", "*")
     payload = get_payload()
+    # with open("/root/webhook-bridge/log.txt", "a") as file_object:
+    #     file_object.write(f"{payload}\n")
 
-    md_payload = parse_gitlab_msg_to_md(payload, {'branch_filter': branch_filter})
+    configs = {
+        # 过滤类型
+        'object-types': [
+            'bug',
+        ],
+        # 过滤动作
+        'bug-actions': [
+            'opened',
+        ],
+        # 产品名称
+        'products': {
+            # "10": "ID为10的产品名称",
+        }
+    }
+
+    md_payload = parse_chandao_msg_to_md(payload, configs)
     if md_payload is None:
         print("md_payload is None")
         exit()

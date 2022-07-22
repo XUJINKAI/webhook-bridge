@@ -14,6 +14,8 @@
 
 然后执行`./webhookd -scripts scripts -static-dir www -static-path /www -listen-addr :8080`运行（或使用`make run`命令）。
 
+提示权限问题的话需要给脚本增加执行权限 `chmod +x scripts/api/*`
+
 程序自带一个简易的web界面，可打开 http://SERVER_IP:8080/www/ 查看。
 
 ## gitlab发送消息到飞书(Lark)
@@ -29,6 +31,12 @@
 启用此服务后，在gitlab中填入：http://SERVER_IP:8080/api/gitlab-feishu.py?hook_url=https://open.feishu.cn/xxxx-xxxx-xxxx-xxxx&branch_filter=master,release/*
 
 其中`branch_filter=master,release/*`为分支过滤条件，此参数可以不填
+
+## 禅道消息发送到飞书(Lark)
+
+老版本禅道webhook不支持飞书，选择默认，地址类似 http://SERVER_IP:8080/api/chandao-feishu.py?hook_url=https://open.feishu.cn/open-apis/bot/v2/hook/xxxx-xxxx-xxxx-xxxx
+
+另外，禅道JSON消息中只有产品ID，没有产品名称，目前需要手动添加相关配置到scripts/api/chandao-feishu.py中。
 
 ## LICENSE
 

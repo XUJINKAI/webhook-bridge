@@ -1,5 +1,6 @@
 __pycache__/
 temp/
 webhookd
+log.txt
 *.tar
 *.tar.gz
