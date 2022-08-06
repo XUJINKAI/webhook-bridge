@@ -1,2 +1,2 @@
 * text eol=lf
-www/lib/* linguist-vendored
+www/lib/* linguist-vendored=true
